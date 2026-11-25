@@ -1,0 +1,19 @@
+name: Verify research artifacts
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  samples:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 -m unittest -v
+      - run: python3 verify.py --digits 50
+      - run: python3 verify.py --digits 80
+  arithmetic:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y elan
+      - run: elan toolchain install "$(cat lean-toolchain)"
+      - run: lean --version && lean -DwarningAsError=true Formal.lean
