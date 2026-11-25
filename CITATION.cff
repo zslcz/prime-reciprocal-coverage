@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "Please cite this research note and its supporting software using the title, credits, and version below."
+type: software
+title: "A logarithmic loss in binary prefix coverage for prime reciprocals"
+authors:
+  - family-names: "zslcz"
+  - name: "6.2Astra (AI assistant)"
+version: "0.1.0-draft"
+abstract: "For every fixed real base greater than two, restricting denominators to primes reduces complete binary prefix coverage of their reciprocals by at least the base-beta logarithm of the shell index, up to an additive constant. The repository supplies a written proof, reproducible data, and a Lean verification of the arithmetic step."
+keywords:
+  - beta expansions
+  - reciprocals of primes
+  - Fourier decay
+  - prime gaps

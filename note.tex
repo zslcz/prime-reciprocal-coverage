@@ -1,0 +1,172 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=25mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,booktabs}
+\usepackage[hidelinks,pdfauthor={zslcz and 6.2Astra (AI assistant)},pdftitle={A logarithmic loss in binary prefix coverage for prime reciprocals}]{hyperref}
+\newtheorem{theorem}{Theorem}
+\newtheorem*{corollary}{Corollary}
+\newcommand{\DP}{D_{\mathbb P}}
+\newcommand{\DN}{D_{\mathbb N}}
+\title{A logarithmic loss in binary prefix coverage\\for prime reciprocals}
+\author{zslcz \quad and \quad 6.2Astra (AI assistant)}
+\date{Research note, v0.1.0-draft}
+\begin{document}
+\maketitle
+\begin{abstract}
+Fix a real base $\beta>2$ and group denominators $n$ into shells
+$\beta^{j-1}<n\le\beta^j$. How many digits can we prescribe in the greedy
+expansion of $1/n$, starting at its first nonzero digit, if the prescribed
+word begins with $1$ and uses only $0$ and $1$? Allowing all integer
+denominators realizes every such word of length $j-1$. Restricting the
+denominators to primes reduces the depth of complete coverage by at least
+$\log_\beta j-O_\beta(1)$ in every sufficiently large shell. We apply
+Fourier decay for a nonlinear image of a self-similar measure to place the
+denominator interval of one word inside a run of composite integers.
+\end{abstract}
+
+\section{Coverage in a denominator shell}
+Write $B=\beta^j$, where $j\ge1$ is an integer. For an integer $B/\beta<n\le B$,
+set $r_0=1/n$, $d_k=\lfloor\beta r_{k-1}\rfloor$ and
+$r_k=\beta r_{k-1}-d_k$. A zero remainder gives a tail of zeros. The first
+nonzero digit is $d_j=\lfloor B/n\rfloor$. For $S=\mathbb N$ or $\mathbb P$
+(the primes), let $D_S(j)$ be the largest $m\ge1$ such that every word in
+$\{1\}\times\{0,1\}^{m-1}$ occurs as $(d_j,\ldots,d_{j+m-1})$ for some
+$n\in S$ in the shell. Each word may use a different denominator. Set
+$D_S(j)=0$ if the first digit $1$ is missing. The shell is finite and
+each denominator supplies at most one word at each depth. A missing word
+also rules out all its extensions.
+
+\begin{theorem}\label{main}
+For every real $\beta>2$ there exist constants $C_\beta$ and $j_0(\beta)$
+such that every integer $j\ge j_0(\beta)$ satisfies
+\[
+  \DP(j)\le j-\log_\beta j+C_\beta .
+\]
+\end{theorem}
+\begin{corollary}
+For the same bases, $\DN(j)-\DP(j)\ge\log_\beta j-O_\beta(1)$.
+In particular, the loss of coverage tends to infinity.
+\end{corollary}
+
+\paragraph{The interval for a word.}
+Given $w=(1,a_1,\dots,a_{m-1})$, write
+$A=1+\sum_{r=1}^{m-1}a_r\beta^{-r}$ and $h=\beta^{1-m}$.
+Let the remainder after the last digit range over $[0,1)$. Reversing any
+step with digit $a\in\{0,1\}$ gives $(a+r)/\beta<1$ for $0\le r<1$.
+Thus the full interval for $B/n$ is $[A,A+h)$, contained in $[1,2)$.
+The corresponding denominator interval and its length are
+\begin{equation}\label{window}
+ I_w=\left(\frac{B}{A+h},\frac{B}{A}\right],\qquad
+ |I_w|=\frac{Bh}{A(A+h)}.
+\end{equation}
+For $m=j-1$ and $j\ge2$ we have $Bh=\beta^2$ and $A(A+h)\le4$.
+Each interval therefore has length greater than one and contains an
+integer. This gives $\DN(j)\ge j-1$ and proves the corollary from
+Theorem~\ref{main}.
+
+\section{Proof of Theorem~\ref{main}}
+\paragraph{Fourier decay after taking reciprocals.}
+Let $\epsilon_1,\epsilon_2,\dots$ be independent fair bits and put
+$U=1+\sum_{r\ge1}\epsilon_r\beta^{-r}$. Its law $\mu$ is the homogeneous
+self-similar measure for the two maps $x\mapsto 1+(x-1+a)/\beta$,
+$a\in\{0,1\}$, with equal weights. Its support lies in $[1,M]$ with
+$M=\beta/(\beta-1)<2$. At the first position where two sequences differ,
+the discrepancy exceeds the largest possible difference of the tails.
+The coding is injective, so $\mu$ has no atoms. On $[1,M]$ take
+$F(u)=1/u$. Extend $F''$ by its positive endpoint values outside this
+interval and integrate twice, matching $F(1)$ and $F'(1)$. This gives a
+$C^2$ extension to $\mathbb R$ with $F''>0$. Theorem~3.1 of Mosquera and
+Shmerkin~\cite{ms} applies to $\nu=F_*\mu$, the law of $1/U$. There
+are constants $K,\sigma>0$, depending on $\beta$, such that
+\[
+ |\widehat\nu(\xi)|\le K|\xi|^{-\sigma}\quad(\xi\ne0),\qquad
+ \widehat\nu(\xi)=\int e^{-2\pi i\xi x}\,d\nu(x).
+\]
+
+\paragraph{Locating a reciprocal modulo a primorial.}
+For every integer $1\le q\le B$ and every interval $J$ on the unit circle,
+\begin{equation}\label{arc}
+ \Pr\big(\{B/(qU)\}\in J\big)=|J|+O_\beta\big((B/q)^{-\sigma}\big),
+\end{equation}
+where braces denote fractional part. To see the uniformity in $J$,
+the $k$th Fourier coefficient of its indicator has magnitude at most
+$1/(\pi |k|)$ for $k\ne0$. The corresponding coefficient of the law
+modulo one is $\widehat\nu(kB/q)$. The product is bounded in magnitude
+by $(K/\pi)(B/q)^{-\sigma}|k|^{-1-\sigma}$, which is summable over
+$k\ne0$. To justify the expansion, first integrate the Fej\'er means of
+the indicator. They are uniformly bounded and converge off its endpoints.
+The distribution modulo one gives those endpoints zero mass, so the
+integrals converge to the probability in~\eqref{arc}.
+
+Choose $0<c<\sigma/(2(1+\sigma))$, set $L=\lfloor c\log B\rfloor$,
+and let $q=\prod_{p\le L}p$, a product over primes. Here $\log$ denotes
+the natural logarithm. The prime number theorem gives $\log q\sim L$, so
+eventually $q\le e^{2L}$ and $q=o(B)$. Set $J=[L/(3q),2L/(3q)]$.
+For large $j$ it lies in $[0,1)$, and $q^{1+\sigma}/B^\sigma\to0$ by
+the choice of $c$. The error in~\eqref{arc} is therefore $o(|J|)$.
+The probability is positive, so some binary sequence and some integer $a$
+satisfy
+\begin{equation}\label{center}
+       aq+L/3\le B/U\le aq+2L/3 .
+\end{equation}
+Since $B/U>B/2$ and $q=o(B)$, we have $a\ge1$ for large $j$.
+Every integer $2\le t\le L$ has a prime divisor that divides $q$.
+It also divides $aq+t$ and is strictly smaller than $aq+t$.
+Thus $aq+2,\ldots,aq+L$ are all composite.
+
+\paragraph{Trapping a whole prefix interval.}
+Take $m=1+\lceil\log_\beta(4B/L)\rceil$ and read the prefix of length $m$
+of this same $U$, counting its leading $1$. The omitted tail is at most
+$h/(\beta-1)<h$, so $B/U\in I_w$. By~\eqref{window}, $|I_w|\le Bh\le L/4$.
+Together with~\eqref{center} this places $I_w$ inside
+$[aq+L/12,aq+11L/12]$. Once $L\ge24$, every integer in $I_w$ belongs
+to the composite run. The word $w$ is missing at depth $m$, and hence
+\[
+  \DP(j)\le m-1\le j-\log_\beta L+\log_\beta4+1 .
+\]
+Substituting $L=\lfloor c j\log\beta\rfloor$ proves the theorem.
+\hfill$\square$
+
+\section{Finite examples and scope}
+For $\beta=\pi$ and $j=2$, the prefix $10$ permits only the denominators
+$8$ and $9$. It occurs among integer reciprocals and has no prime witness.
+The accompanying code checks every first missing word in the complete
+shells up to denominator $10^8$. Rational enclosures certify the integer
+endpoints of each interval, and a sieve tests for a prime witness.
+\begin{center}
+\begin{tabular}{lrrr}
+\toprule
+Base & Last complete shell $j$ & $\DN(j)$ & $\DP(j)$\\
+\midrule
+$\pi$ & 16 & 16 & 12\\
+$e$   & 18 & 18 & 13\\
+\bottomrule
+\end{tabular}
+\end{center}
+These data check the definitions and implementation. The proof gives no
+numerical threshold for these samples and leaves the optimal growth rate
+of the loss undetermined.
+
+Related work treats membership of individual reciprocals in missing-digit
+sets in integer bases~\cite{kom}. Here coverage is a property of a whole
+shell and a finite word length that varies with the shell. The argument
+uses the prime number theorem and the published Fourier decay estimate
+above. Priority for this particular coverage bound remains undetermined.
+
+\paragraph{Contributions and review status.}
+zslcz posed the problem and directed the project. The AI assistant
+credited as 6.2Astra assisted
+with the derivation, literature search, software, and preparation of the
+manuscript. The repository includes a Lean verification of the arithmetic
+step that excludes primes from a trapped interval. The full asymptotic
+argument is given in the text. This draft has not been independently
+peer reviewed.
+\begin{thebibliography}{9}
+\bibitem{ms} C.~A. Mosquera and P.~Shmerkin,
+\href{https://www.acadsci.fi/mathematica/Vol43/vol43pp0823-0834.pdf}
+{\emph{Self-similar measures: asymptotic bounds for the dimension and Fourier decay of smooth images}},
+Ann. Acad. Sci. Fenn. Math. \textbf{43} (2018), 823--834.
+\bibitem{kom} S.~D. Kominers,
+\emph{A Fixed-Prime Criterion for Reciprocals in Missing-Digit Sets},
+\href{https://arxiv.org/abs/2604.11282}{arXiv:2604.11282} (2026).
+\end{thebibliography}
+\end{document}
