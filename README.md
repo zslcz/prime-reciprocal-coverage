@@ -8,13 +8,17 @@ How many leading digits can you prescribe in the reciprocal of a prime? In base 
 
 ## Result
 
-Fix a real base $\beta>2$. In the shell $\beta^{j-1}<n\le\beta^j$, read the greedy expansion of $1/n$ from its first nonzero digit. Let $D_{\mathbb P}(j)$ be the greatest length for which **every word on 0 and 1 beginning with 1** occurs among the prime denominators in that shell. Different words may have different witnesses. Use $D_{\mathbb N}(j)$ for all integer denominators. The depth is zero if the digit 1 is missing.
+Fix a real base β > 2. The first shell contains the integers greater than 1 and at most β. Multiplying both endpoints by β gives the next shell. For each denominator n in a shell, read the greedy expansion of 1/n from its first nonzero digit.
 
-For each fixed base there is a constant $C_\beta$ such that all sufficiently large $j$ satisfy
+The **prime coverage depth** is the greatest length for which every word of zeros and ones beginning with 1 occurs as a prefix of some prime reciprocal in the shell. Different words may use different primes. If even the prefix 1 is missing, the depth is zero. For every sufficiently large shell index j, the prime coverage depth satisfies
 
 $$D_{\mathbb P}(j)\le j-\log_\beta j+C_\beta.$$
 
-Every length-$(j-1)$ word has an integer witness when $j\ge2$. Thus the loss $D_{\mathbb N}(j)-D_{\mathbb P}(j)$ is at least $\log_\beta j-O_\beta(1)$ and tends to infinity. The optimal order of the loss and a numerical threshold for the samples below remain undetermined.
+The constant on the right depends only on the base. With all integer denominators available, every such word of length j − 1 occurs whenever j ≥ 2. Subtracting the prime depth from the integer depth therefore gives
+
+$$D_{\mathbb N}(j)-D_{\mathbb P}(j)\ge \log_\beta j-O_\beta(1).$$
+
+In particular, the number of digits lost tends to infinity. The proof leaves the optimal growth rate and a numerical threshold for the samples below undetermined.
 
 The proof converts a word into an interval of possible denominators. Fourier decay for the reciprocal image of a self-similar measure places one such interval inside a run of composite integers. The external inputs are the prime number theorem and Theorem 3.1 of Mosquera and Shmerkin. Priority for this particular coverage bound remains undetermined. [Fourier decay theorem](https://www.acadsci.fi/mathematica/Vol43/vol43pp0823-0834.pdf) · [Related work on reciprocals in missing-digit sets](https://arxiv.org/abs/2604.11282)
 
